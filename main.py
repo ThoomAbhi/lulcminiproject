@@ -282,27 +282,27 @@ async def fun():
   # drive.mount('/content/drive', force_remount=True)
   ee.Authenticate()
   ee.Initialize(project="helical-apricot-454313-u0")
-  ISO = 'IND' # "DEU" is the ISO code for Germany
-  ADM = 'ADM3' # Equivalent to administrative districts
+  # ISO = 'IND' # "DEU" is the ISO code for Germany
+  # ADM = 'ADM3' # Equivalent to administrative districts
 
-  # Query geoBoundaries
-  url = f"https://www.geoboundaries.org/api/current/gbOpen/{ISO}/{ADM}"
-  r = requests.get(url)
-  download_path = r.json()["gjDownloadURL"]
+  # # Query geoBoundaries
+  # url = f"https://www.geoboundaries.org/api/current/gbOpen/{ISO}/{ADM}"
+  # r = requests.get(url)
+  # download_path = r.json()["gjDownloadURL"]
 
   # Save the result as a GeoJSON
-  filename = 'geoboundary.geojson'
-  geoboundary = requests.get(download_path).json()
-  with open(filename, 'w') as file:
-    geojson.dump(geoboundary, file)
+  filename = './geoboundary.geojson'
+  # geoboundary = requests.get(download_path).json()
+  # with open(filename, 'w') as file:
+  #   geojson.dump(geoboundary, file)
 
   # Read data using GeoPandas
   geoboundary = gpd.read_file(filename)
 
 
-  if not (geoboundary['shapeName'] == shape_name).any():
-    st.error("City is wrong")
-    return ""
+  # if not (geoboundary['shapeName'] == shape_name).any():
+  #   st.error("City is wrong")
+  #   return ""
 
 
   region  = geoboundary.loc[geoboundary.shapeName == shape_name]
@@ -324,7 +324,7 @@ async def fun():
 
 
   # Change this to your image file path
-  cwd = './drive/My Drive/Colab Notebooks/'
+  cwd = './mapdata/'
   tif_file = os.path.join(cwd, '{}.tif'.format(shape_name))
 
   # Uncomment this to download the TIF file
@@ -346,7 +346,7 @@ async def fun():
   tiles = gpd.sjoin(tiles, boundary, predicate='within')
 
   device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-  model_file = cwd+'/models/best_model.pth'
+  model_file = './models/best_model.pth'
 
   # Uncomment this to download the model file
   #if not os.path.isfile(model_file):

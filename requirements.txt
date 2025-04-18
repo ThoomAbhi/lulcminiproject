@@ -1,0 +1,29 @@
+# Streamlit and its plugins
+streamlit
+streamlit-folium
+
+# Standard packages
+tqdm
+requests
+pandas
+numpy
+Pillow
+
+# Geospatial packages
+geopandas
+geojson
+shapely
+rasterio
+folium
+earthengine-api
+eeconvert
+geemap
+
+# Deep learning
+torch
+torchvision
+
+
+
+
+
